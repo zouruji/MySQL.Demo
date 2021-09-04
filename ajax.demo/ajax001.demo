@@ -1,0 +1,63 @@
+/*通过js*/
+
+use information_schema;
+drop database if exists ajax_demo;
+create database ajax_demo
+ default charset utf8mb4 collate utf8mb4_general_ci;
+use ajax_demo;
+
+/*用户信息*/
+create table tb_user
+(
+  uid integer auto_increment primary key
+  comment'用户编号，主键',
+  username varchar(20)unique not null comment'用户名',
+  password varchar(20) not null comment '登录密码',
+  nickname varchar(200) comment '用户昵称',
+  reg_date timestamp default now() not null
+  comment '注册时间',
+  enable enum('y','n')default 'y'not null
+  comment'用户是否启用,默认为y(启用)'
+)comment '用户信息';
+
+insert into tb_user(username,password,nickname)
+ values('user','user-pwd','内置测试用户');
+ 
+select * from tb_user;
+
+/*
+注册用户对应到nsert into 语句
+需要注意的是要先检查用户名是否存在
+select * from tb_user
+where username='要检查的用户名'
+
+登录就是查询用户名和密码是否匹配
+select * from tb_user
+where username='登录用户名' and password='登录密码'
+有结果表示登录信息正确，否则就是登录信息错误
+
+修改密码对应到修改语句
+update tb_user set passwored='新密码'
+where uid=要修改密码的用户名编号
+*/
+
+select * from tb_user
+where username='user';
+
+select * from tb_user
+where username='hpx';
+
+select * from tb_user
+where username='user' and password='user-pwd';
+
+select * from tb_user
+where username='hpx' and password='user-pwd';
+
+select * from tb_user
+where username='user' and password='123456';
+
+update tb_user set password='user-1234'
+where uid=1;
+
+update tb_user set password='user-pwd'
+where uid=1;
